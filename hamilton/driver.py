@@ -399,6 +399,15 @@ class Driver:
             # TODO -- update this to use the lifecycle methods
             self.capture_constructor_telemetry(error, modules, config, adapter)
 
+    def get_graph(self) -> graph_types.HamiltonGraph:
+        """Gives a graph object that you can use -- export, inspect, walk, etc...
+        This is in place of accessing the internal graph directly, which does not commit
+        to a stable API.
+
+        :return: A HamiltonGraph object.
+        """
+        return graph_types.HamiltonGraph.from_graph(self.graph)
+
     def capture_constructor_telemetry(
         self,
         error: Optional[str],
