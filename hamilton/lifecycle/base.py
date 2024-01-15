@@ -149,7 +149,7 @@ def validate_validator_fn(fn: Callable):
     """Ensures that a function forms a registerable "validator". These are currently the same rules as "hooks".
     While they should also raise an exception, that is not possible to express in the type annotation.
 
-    @param fn: Function to validate
+    :param fn: Function to validate
     :raises InvalidLifecycleAdapter: If the function is not a valid validator
     """
     if inspect.iscoroutinefunction(fn):
@@ -174,8 +174,7 @@ class lifecycle:
         """Hooks get called at distinct stages of Hamilton's execution.
         These can be layered together, and potentially coupled to other hooks.
 
-        @param fn_name:
-        @return:
+        :param fn_name: Name of the function that will reside in the class we're decorating
         """
 
         def decorator(clazz):
@@ -204,7 +203,7 @@ class lifecycle:
         Thus they can only be called once, and not layered. TODO -- determine
         how to allow multiple/have precedence for custom behavior.
 
-        @param fn_name: Name of the function in the class we're registering.
+        :param fn_name: Name of the function in the class we're registering.
         """
 
         def decorator(clazz):
@@ -233,8 +232,8 @@ class lifecycle:
         logic, and multiple can be layered together. That said, they *also* expect you to raise an error
         if there is an issue, and have no output.
 
-        @param fn_name: Name of the function in the class we're registering.
-        @param raises:  Type of the exception that the validator raises.
+        :param fn_name: Name of the function in the class we're registering.
+        :param raises:  Type of the exception that the validator raises.
         """
 
         def decorator(clazz):
@@ -306,13 +305,13 @@ class BaseValidateGraph(abc.ABC):
     @abc.abstractmethod
     def validate_graph(
         self, *, graph: "graph.FunctionGraph", modules: List[ModuleType], config: Dict[str, Any]
-    ) -> Tuple[bool, Optional[Exception]]:
+    ) -> Tuple[bool, Optional[str]]:
         """Validates the graph. This will raise an InvalidNodeException
 
-        @param graph:
-        @param modules:
-        @param config:
-        @return:
+        :param graph: Graph that has been constructed.
+        :param modules: Modules passed into the graph
+        :param config: Config passed into the graph
+        :return: A (is_valid, error_message) tuple
         """
 
 
@@ -841,9 +840,9 @@ class LifecycleAdapterSet:
     def does_validation(self, validator_name: str) -> bool:
         """Whether a validator is implemented by any of the adapters in this group.
 
-        @param validator_name: Name of the validator
-        @param is_async: Whether you want the async version or not
-        @return: True if this adapter set does this validator, False otherwise
+        :param validator_name: Name of the validator
+        :param is_async: Whether you want the async version or not
+        :return: True if this adapter set does this validator, False otherwise
         """
         if validator_name not in REGISTERED_SYNC_VALIDATORS:
             import pdb

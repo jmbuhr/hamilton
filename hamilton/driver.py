@@ -297,9 +297,9 @@ class Driver:
     ):
         """Utility function to perform graph validations. Static so we're not stuck with local state
 
-        @param adapter: Adapter to use for validation.
-        @param graph: Graph to validate.
-        @param graph_modules: Modules to validate.
+        :param adapter: Adapter to use for validation.
+        :param graph: Graph to validate.
+        :param graph_modules: Modules to validate.
         """
 
         if adapter.does_validation("validate_node"):

@@ -76,8 +76,8 @@ class HamiltonGraph:
     def from_graph(fn_graph: "graph.FunctionGraph") -> "HamiltonGraph":
         """Creates a HamiltonGraph from a FunctionGraph (Hamilton's internal representation).
 
-        @param fn_graph: FunctionGraph to convert
-        @return: HamiltonGraph created from the FunctionGraph
+        :param fn_graph: FunctionGraph to convert
+        :return: HamiltonGraph created from the FunctionGraph
         """
         return HamiltonGraph(
             nodes=[HamiltonNode.from_node(n) for n in fn_graph.nodes.values()],

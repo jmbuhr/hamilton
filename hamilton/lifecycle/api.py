@@ -330,11 +330,11 @@ class GraphExecutionHook(BasePreGraphExecute, BasePostGraphExecute):
         """This is run after graph execution. This allows you to do anything you want after the graph executes,
         knowing the results of the execution/any errors.
 
-        @param graph: Graph that is being executed
-        @param results: Results of the graph execution
-        @param error: Error that occurred, None if no error occurred
-        @param success: Whether the graph executed successfully
-        @param future_kwargs: Additional keyword arguments -- this is kept for backwards compatibility
+        :param graph: Graph that is being executed
+        :param results: Results of the graph execution
+        :param error: Error that occurred, None if no error occurred
+        :param success: Whether the graph executed successfully
+        :param future_kwargs: Additional keyword arguments -- this is kept for backwards compatibility
         """
         pass
 
