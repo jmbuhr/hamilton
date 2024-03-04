@@ -6,11 +6,9 @@ from langchain import text_splitter
 
 # from langchain_core import documents
 
-
 def article_regex() -> str:
     """This assumes you're using the furo theme for sphinx"""
     return r'<article role="main" id="furo-main-content">(.*?)</article>'
-
 
 def article_text(url: str, article_regex: str) -> str:
     """Pulls URL and takes out relevant HTML.
@@ -19,13 +17,15 @@ def article_text(url: str, article_regex: str) -> str:
     :param article_regex: the regext to use to get the contents out of.
     :return: sub-portion of the HTML
     """
-    html = requests.get(url)
+    try:
+        html = requests.get(url)
+    except requests.exceptions.RequestException:
+        raise Exception(f'Failed to get URL: {url}')
     article = re.findall(article_regex, html.text, re.DOTALL)
     if not article:
         raise ValueError(f"No article found in {url}")
     text = article[0].strip()
     return text
-
 
 def html_chunker() -> text_splitter.HTMLHeaderTextSplitter:
     """Return HTML chunker object.
@@ -39,7 +39,6 @@ def html_chunker() -> text_splitter.HTMLHeaderTextSplitter:
     ]
     return text_splitter.HTMLHeaderTextSplitter(headers_to_split_on=headers_to_split_on)
 
-
 def text_chunker(
     chunk_size: int = 256, chunk_overlap: int = 32
 ) -> text_splitter.RecursiveCharacterTextSplitter:
@@ -52,7 +51,6 @@ def text_chunker(
     return text_splitter.RecursiveCharacterTextSplitter(
         chunk_size=chunk_size, chunk_overlap=chunk_overlap
     )
-
 
 def chunked_text(
     article_text: str,
